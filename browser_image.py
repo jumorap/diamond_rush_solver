@@ -29,26 +29,24 @@ def take_screenshot():
     Take a screenshot to current game in window and saves it as "canvas.png"
     """
     global ss_path, current_lvl
-    while True:
-        # Wait an input to save the current canvas as a screenshot
-        current_lvl = input("Enter here to take a screenshot of the map: ")
-        ss_path = "./images/ss/canvas.png"
-        browser.save_screenshot(ss_path)
+    # Wait an input to save the current canvas as a screenshot
+    current_lvl = input("Enter here to take a screenshot of the map: ")
+    ss_path = "./images/ss/canvas.png"
+    browser.save_screenshot(ss_path)
 
-        # Opens an image in RGB mode and get the size
-        im = Image.open(rf"{ss_path}")
-        width, height = im.size
+    # Opens an image in RGB mode and get the size
+    im = Image.open(rf"{ss_path}")
+    width, height = im.size
 
-        # Setting the points for cropped image
-        window_game = int(height * (640 / 960))
-        measure = math.ceil((width - window_game) / 2)
-        left, top, right, bottom = measure, 0, measure + window_game, height
+    # Setting the points for cropped image
+    window_game = int(height * (640 / 960))
+    measure = math.ceil((width - window_game) / 2)
+    left, top, right, bottom = measure, 0, measure + window_game, height
 
-        # Cropped image of above dimension and save the new image
-        im1 = im.crop((left, top, right, bottom))
-        im1.save(ss_path)
-        manage_screenshot()
-        print("Image saved")
+    # Cropped image of above dimension and save the new image
+    im1 = im.crop((left, top, right, bottom))
+    im1.save(ss_path)
+    print("Image saved")
 
 
 def save_per_block_type(i, j, image):
@@ -72,11 +70,9 @@ def manage_screenshot():
     block_path = "./images/blocks/b"
     ss = Image.open(rf"{ss_path}")
     width, height = ss.size
-    print(width, height)
 
     width_base = math.ceil(width / 10) - 1
     height_base = math.ceil(height / 15) - 1
-    print(width_base, height_base)
 
     for i in range(15):
         for j in range(10):
@@ -86,9 +82,8 @@ def manage_screenshot():
             top = i * height_base
 
             im1 = ss.crop((left, top, right, bottom))
-            print((left, top, right, bottom))
-            save_per_block_type(i, j, im1)
-            # im1.save(f"{block_path}_{i}x{j}.png")
+            # save_per_block_type(i, j, im1)
+            im1.save(f"{block_path}_{i}x{j}.png")
 
 
 def main():
@@ -99,6 +94,7 @@ def main():
     """
     load_browser()
     take_screenshot()
+    manage_screenshot()
 
 
 if __name__ == "__main__":
