@@ -2,6 +2,7 @@ from selenium import webdriver
 from PIL import Image
 import math
 import os
+import numpy as np
 
 import MATRICES
 
@@ -84,6 +85,14 @@ def manage_screenshot():
             im1 = ss.crop((left, top, right, bottom))
             # save_per_block_type(i, j, im1)
             im1.save(f"{block_path}_{i}x{j}.png")
+
+
+def np_image():
+    """
+    Load the current image as a CPU array in numpy format
+    :return: np array
+    """
+    return np.asarray(np.asarray(Image.open(ss_path)))
 
 
 def main():
