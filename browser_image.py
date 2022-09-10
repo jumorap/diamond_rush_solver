@@ -6,7 +6,7 @@ import numpy as np
 
 import MATRICES
 
-global browser, ss_path, current_lvl
+global browser, ss_path, current_lvl, arr_blocks_np
 
 
 def load_browser():
@@ -67,10 +67,11 @@ def manage_screenshot():
     """
     Cut the map image as 15*10 image per block and save it as "./images/blocks/b*x*.png"
     """
-    global ss_path
+    global ss_path, arr_blocks_np
     block_path = "./images/blocks/b"
     ss = Image.open(rf"{ss_path}")
     width, height = ss.size
+    arr_blocks_np = []
 
     width_base = math.ceil(width / 10) - 1
     height_base = math.ceil(height / 15) - 1
@@ -84,7 +85,9 @@ def manage_screenshot():
 
             im1 = ss.crop((left, top, right, bottom))
             # save_per_block_type(i, j, im1)
-            im1.save(f"{block_path}_{i}x{j}.png")
+            path_temp = f"{block_path}_{i}x{j}.png"
+            im1.save(path_temp)
+            arr_blocks_np.append(np.asarray(Image.open(path_temp)))
 
 
 def np_image():
@@ -93,6 +96,13 @@ def np_image():
     :return: np array
     """
     return np.asarray(np.asarray(Image.open(ss_path)))
+
+
+def np_blocks():
+    """
+    :return: np array:  arr_blocks_np
+    """
+    return np.array(arr_blocks_np)
 
 
 def main():
