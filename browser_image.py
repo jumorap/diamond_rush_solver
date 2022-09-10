@@ -92,7 +92,7 @@ def np_image():
     Load the current image as a CPU array in numpy format
     :return: np array
     """
-    return np.asarray(ss_path)
+    return np.asarray(np.asarray(Image.open(ss_path)))
 
 
 def main():
