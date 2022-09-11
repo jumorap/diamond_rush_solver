@@ -17,11 +17,11 @@ def load_browser():
     global browser
     # Configure the browser to load the previous games in caché
     options = webdriver.ChromeOptions()
-    options.add_argument("user-data-dir=C:/Users/juan1/AppData/Local/Chromium/User Data/Default") # Get from chrome://version/ in browser. Tagged as "profile route"
+    options.add_argument("user-data-dir=C:/Users/jsant/AppData/Local/Google/Chrome/User Data/Profile") # Get from chrome://version/ in browser. Tagged as "profile route"
 
     # Pick the App to lunch the browser and configure the window size with the URL to load
     browser = webdriver.Chrome("chromedriver.exe", options=options)
-    browser.set_window_size(720, 1000)
+    browser.set_window_size(720, 1022)
     browser.get('https://www.minijuegosgratis.com/v3/games/games/prod/219431/diamond-rush/index.html')
 
 
@@ -32,7 +32,7 @@ def take_screenshot():
     global ss_path, current_lvl
     # Wait an input to save the current canvas as a screenshot
     current_lvl = input("Enter here to take a screenshot of the map: ")
-    ss_path = "./images/ss/canvas.png"
+    ss_path = "./images_utils/canvas.png"
     browser.save_screenshot(ss_path)
 
     # Opens an image in RGB mode and get the size
@@ -68,7 +68,7 @@ def manage_screenshot():
     Cut the map image as 15*10 image per block and save it as "./images/blocks/b*x*.png"
     """
     global ss_path, arr_blocks_np
-    block_path = "./images/blocks/b"
+    block_path = "./images_utils/blocks/b"
     ss = Image.open(rf"{ss_path}")
     width, height = ss.size
     arr_blocks_np = []
