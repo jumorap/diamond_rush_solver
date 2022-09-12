@@ -3,8 +3,7 @@ from PIL import Image
 import math
 import os
 import numpy as np
-import Categorizer
-import MATRICES
+
 
 global browser, ss_path, current_lvl, arr_blocks_np
 
@@ -17,7 +16,7 @@ def load_browser():
     global browser
     # Configure the browser to load the previous games in caché
     options = webdriver.ChromeOptions()
-    options.add_argument("user-data-dir=C:/Users/jsant/AppData/Local/Google/Chrome/User Data/Profile") # Get from chrome://version/ in browser. Tagged as "profile route"
+    options.add_argument("user-data-dir=C:/Users/juan1/AppData/Local/Chromium/User Data/Default") # Get from chrome://version/ in browser. Tagged as "profile route"
 
     # Pick the App to lunch the browser and configure the window size with the URL to load
     browser = webdriver.Chrome("chromedriver.exe", options=options)
@@ -114,9 +113,6 @@ def main():
     load_browser()
     take_screenshot()
     manage_screenshot()
-    classes = Categorizer.getCurrentClasses()
-    Categorizer.printMatrix(classes)
-
 
 
 if __name__ == "__main__":

@@ -1,5 +1,3 @@
-# @title LevelS
-
 """
 'R' Rocas
 'D' Diamantes
