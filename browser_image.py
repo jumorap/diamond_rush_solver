@@ -4,6 +4,8 @@ import math
 import os
 import numpy as np
 
+import MATRICES
+
 
 global browser, ss_path, current_lvl, arr_blocks_np
 
@@ -72,15 +74,12 @@ def manage_screenshot():
     width, height = ss.size
     arr_blocks_np = []
 
-    width_base = math.ceil(width / 10) - 1
-    height_base = math.ceil(height / 15) - 1
+    width_base, height_base = math.ceil(width / 10) - 1, math.ceil(height / 15) - 1
 
     for i in range(15):
         for j in range(10):
-            right = width_base * (j + 1)
-            bottom = height_base * (i + 1)
-            left = j * width_base
-            top = i * height_base
+            right, bottom = width_base * (j + 1), height_base * (i + 1)
+            left, top = j * width_base, i * height_base
 
             im1 = ss.crop((left, top, right, bottom))
             # save_per_block_type(i, j, im1)
@@ -94,7 +93,7 @@ def np_image():
     Load the current image as a CPU array in numpy format
     :return: np array
     """
-    return np.asarray(np.asarray(Image.open(ss_path)))
+    return np.asarray(Image.open(ss_path))
 
 
 def np_blocks():
