@@ -3,7 +3,7 @@ from PIL import Image
 import math
 import os
 import numpy as np
-
+import Categorizer
 import MATRICES
 
 global browser, ss_path, current_lvl, arr_blocks_np
@@ -114,6 +114,9 @@ def main():
     load_browser()
     take_screenshot()
     manage_screenshot()
+    classes = Categorizer.getCurrentClasses()
+    Categorizer.printMatrix(classes)
+
 
 
 if __name__ == "__main__":
