@@ -1,5 +1,6 @@
 import browser_image
 import categorize
+import browser_moves
 
 
 def main():
@@ -9,6 +10,8 @@ def main():
     classes = categorize.get_current_classes()
     print("Finishing...")
     categorize.print_matrix(classes)
+    print("Moving...")
+    browser_moves.main()
 
 
 if __name__ == "__main__":

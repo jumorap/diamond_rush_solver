@@ -3,8 +3,10 @@ from PIL import Image
 import math
 import os
 import numpy as np
+import pydirectinput
 
-import MATRICES
+
+import matrix
 
 
 global browser, ss_path, current_lvl, arr_blocks_np
@@ -22,7 +24,7 @@ def load_browser():
 
     # Pick the App to lunch the browser and configure the window size with the URL to load
     browser = webdriver.Chrome("chromedriver.exe", options=options)
-    browser.set_window_size(720, 1022)
+    browser.set_window_size(530, 804)
     browser.get('https://www.minijuegosgratis.com/v3/games/games/prod/219431/diamond-rush/index.html')
 
 
@@ -48,14 +50,19 @@ def take_screenshot():
     # Cropped image of above dimension and save the new image
     im1 = im.crop((left, top, right, bottom))
     im1.save(ss_path)
+
+    # Resize the image to 560x840
+    im1 = Image.open(ss_path)
+    im1 = im1.resize((560, 840))
+    im1.save(ss_path)
     print("Image saved")
 
 
 def save_per_block_type(i, j, image):
     """
-    Save multiple images cataloged in MATRICES.py as their self reference
+    Save multiple images cataloged in matrix.py as their self reference
     """
-    m_current_lvl = eval(f"MATRICES.Level{current_lvl}")
+    m_current_lvl = eval(f"matrix.Level{current_lvl}")
     path = f"./images/{m_current_lvl[i][j]}"
     try:
         os.mkdir(path)
@@ -74,7 +81,7 @@ def manage_screenshot():
     width, height = ss.size
     arr_blocks_np = []
 
-    width_base, height_base = math.ceil(width / 10) - 1, math.ceil(height / 15) - 1
+    width_base, height_base = math.ceil(width / 10), math.ceil(height / 15)
 
     for i in range(15):
         for j in range(10):
@@ -101,6 +108,27 @@ def np_blocks():
     :return: np array:  arr_blocks_np
     """
     return np.array(arr_blocks_np)
+
+
+def movements(move):
+    """
+    Move the character in the game
+    :param move: str
+    :return:
+    """
+    check_browser()
+    pydirectinput.keyDown(move)
+    pydirectinput.keyUp(move)
+
+
+def check_browser():
+    """
+    Check if the browser is open
+    """
+    try:
+        browser.title
+    except:
+        exit("Browser closed")
 
 
 def main():
