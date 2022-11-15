@@ -1,16 +1,16 @@
 """
-'R' Rocas
-'D' Diamantes
+'R' Rocas -
+'D' Diamantes -
 'P' Personaje
-'M'  Muros
-'W' Lava
-'A' Llegada
-'C' Camino
-'K' Muro con llave
-'L' llave
-'S' Púas- spikes
-'H' HUECO
-'B' bOTON
+'M'  Muros -
+'W' Lava -
+'A' Llegada -
+'C' Camino -
+'K' Muro con llave -
+'L' llave -
+'S' Púas- spikes -
+'H' HUECO -
+'B' bOTON -
 'U' DOOR
 """
 
