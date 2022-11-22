@@ -6,7 +6,7 @@ import numpy as np
 import pydirectinput
 
 
-import matrix
+import Solver.matrix
 
 
 global browser, ss_path, current_lvl, arr_blocks_np

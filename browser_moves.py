@@ -4,18 +4,24 @@ import time
 import browser_image
 
 
-def main():
+def main(solution_matrix):
     """
     Move randomly the character
     """
-    choices = ["up", "down", "left", "right"]
+    """choices = ["up", "down", "left", "right"]
     correct_lvl2 = [
         "left", "left", "left", "left", "left", "down", "left", "up",
         "up", "up", "up", "up", "up", "up", "up", "up", "right", "right",
         "up", "down", "right", "right", "down", "down", "down", "right",
         "right", "up", "left", "left", "down", "down", "down", "left",
-        "left", "down"
-    ]
+        "left"
+    ]"""
+
+    # Replace L with left, R with right, U with up, D with down
+    solution_matrix = [x.replace("L", "left") for x in solution_matrix]
+    solution_matrix = [x.replace("R", "right") for x in solution_matrix]
+    solution_matrix = [x.replace("U", "up") for x in solution_matrix]
+    solution_matrix = [x.replace("D", "down") for x in solution_matrix]
 
     # Print and show a timer of 3 seconds
     timer = 3
@@ -26,17 +32,13 @@ def main():
         print(timer - i)
         time.sleep(1)
 
-    for election in correct_lvl2:
+    for election in solution_matrix:
         print(f"Moving {election}")
         browser_image.movements(election)
-        time.sleep(1)
+        time.sleep(0.07)
 
-    while True:
+    """while True:
         election = random.choice(choices)
         print(f"Moving {election}")
         browser_image.movements(election)
-        time.sleep(1)
-
-
-if __name__ == '__main__':
-    main()
+        time.sleep(1)"""
