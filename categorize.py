@@ -47,7 +47,7 @@ def read_image_colors():
             image_colors_list.append((image_class, image_color))
 
             # convert allImageColors into a dictionary
-    image_classes = ['R', 'D', 'P', 'M', 'W', 'A', 'C', 'K', 'L', 'S', 'H', 'B', 'U']
+    image_classes = ['R', 'D', 'P', 'M', 'W', 'A', 'C', 'K', 'L', 'S', 'E', 'H', 'B', 'U']
     image_colors = {i: set() for i in image_classes}
     for image_class, image_color in image_colors_list:
         image_colors[image_class].add(image_color)
@@ -82,7 +82,6 @@ def filter_classes_by_color(possibleClasses, image_colors_dict, image_color):
             if color_distance < closest_color_distance:
                 closest_color_distance = color_distance
                 closest_color_class = (distance, kind)
-
     return [closest_color_class]
 
 
@@ -165,8 +164,3 @@ def print_matrix(matrix):
         for j in range(len(matrix[i])):
             print(matrix[i][j], end=" ")
         print()
-
-
-def print_current_matrix():
-    curr = get_current_classes()
-    print_matrix(curr)

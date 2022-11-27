@@ -34,7 +34,7 @@ def take_screenshot():
     """
     global ss_path, current_lvl
     # Wait an input to save the current canvas as a screenshot
-    current_lvl = input("Enter here to take a screenshot of the map: ")
+    # current_lvl = input("Enter here to take a screenshot of the map: ")
     ss_path = "./images_utils/canvas.png"
     browser.save_screenshot(ss_path)
 
@@ -131,16 +131,23 @@ def check_browser():
         exit("Browser closed")
 
 
-def main():
+def start_browser():
     """
     The current file must be used as an imported file that open the browser with caché info,
     load the game, saves the current image in game as ./images/ss/*.png and cut it as 10*15 images,
     where 1 image represents 1 block
     """
     load_browser()
+
+
+def start_game():
+    """
+    Take a screenshot of browser and cut it with the correct size
+    :return:
+    """
     take_screenshot()
     manage_screenshot()
 
 
 if __name__ == "__main__":
-    main()
+    start_browser()

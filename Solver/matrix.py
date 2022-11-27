@@ -9,6 +9,7 @@
 'K' Muro con llave -
 'L' llave -
 'S' Púas- spikes -
+'E' Púas abiertas- open spikes -
 'H' HUECO -
 'B' bOTON -
 'U' DOOR
