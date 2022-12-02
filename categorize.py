@@ -1,9 +1,6 @@
 import os
 from PIL import Image
 import imagehash
-import math
-
-from colorthief import ColorThief
 
 
 def convert_to_array(image_hashes):
@@ -37,56 +34,20 @@ def get_all_image_hashes():
     return convert_to_array(image_hashes)
 
 
-def read_image_colors():
-    image_colors_list = []
-    with open("imageColors.txt", "r") as f:
-        for line in f:
-            line = line.split()
-            image_class = line[0]
-            image_color = (int(line[1]), int(line[2]), int(line[3]))
-            image_colors_list.append((image_class, image_color))
-
-            # convert allImageColors into a dictionary
-    image_classes = ['R', 'D', 'P', 'M', 'W', 'A', 'C', 'K', 'L', 'S', 'E', 'H', 'B', 'U']
-    image_colors = {i: set() for i in image_classes}
-    for image_class, image_color in image_colors_list:
-        image_colors[image_class].add(image_color)
-
-    return image_colors
-
-
 # given an image, compares by hash with the stored images and returns the class
-def get_class(image, image_hashes_array, image_colors_dict, cutoff):
+def get_class(image, image_hashes_array, cutoff):
     image_hash = imagehash.average_hash(image)
-    image_color = ColorThief(image).get_color(quality=1)
     more_possible_classes = []
     for image_class, image_values_stored in image_hashes_array:
         image_distance = image_hash - image_values_stored
         if image_distance < cutoff:
             more_possible_classes.append((image_distance, image_class))
 
-    return get_possible_classes(more_possible_classes, image_colors_dict, image_color)
-
-
-def get_distance_between_colors(color1, color2):
-    return math.sqrt((color1[0] - color2[0]) ** 2 + (color1[1] - color2[1]) ** 2 + (color1[2] - color2[2]) ** 2)
-
-
-def filter_classes_by_color(possibleClasses, image_colors_dict, image_color):
-    # check for the closest similarity in the colors
-    closest_color_distance = 10000
-    closest_color_class = ""
-    for distance, kind in possibleClasses:
-        for color in image_colors_dict[kind]:
-            color_distance = get_distance_between_colors(color, image_color)
-            if color_distance < closest_color_distance:
-                closest_color_distance = color_distance
-                closest_color_class = (distance, kind)
-    return [closest_color_class]
+    return get_possible_classes(more_possible_classes)
 
 
 # given an array of tuples (distance, class), returns the class with the lowest distance
-def get_possible_classes(possible_classes, image_colors_dict, image_color):
+def get_possible_classes(possible_classes):
     if len(possible_classes) == 0:
         return [(-1, "UK")]
 
@@ -117,17 +78,16 @@ def get_possible_classes(possible_classes, image_colors_dict, image_color):
         if not_repetitive_classes[0][1] in ["M", "B"] and not_repetitive_classes[1][1] in ["M", "B"]:
             return [(-1, "M")]
 
-    return filter_classes_by_color(not_repetitive_classes, image_colors_dict, image_color)
+    return not_repetitive_classes
 
 
 # given an array of images in PIL format, returns the class of each image
 def classify_full_image(images_block, images_blocks_paths, cutoff=20):
     image_hashes_array = get_all_image_hashes()  # save this somewere to save procesing
-    image_colors_dict = read_image_colors()
 
     image_classes = []
     for image_block, path in zip(images_block, images_blocks_paths):
-        image_class = get_class(image_block, image_hashes_array, image_colors_dict, cutoff)
+        image_class = get_class(image_block, image_hashes_array, cutoff)
         image_classes.append((image_class, path))
     return image_classes
 
